@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>RESULTS PAGE</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js" integrity="sha256-mpnrJ5DpEZZkwkE1ZgkEQQJW/46CSEh/STrZKOB/qoM=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js" integrity="sha256-+JMHsXRyeTsws/tzbIh5YHQxRdKCuNjmvNcTFtY6DLc=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.min.js" integrity="sha256-YFhaeQSVBgAFNN5z4I9YRB2jCuqc2nvypz0Q2eQzcx8=" crossorigin="anonymous"></script>
+
+
+	<style type="text/css">
+		body {
+			margin: 16px;
+			font-size: 24px;
+			font-family: sans-serif;
+		}
+		table {
+			margin-top: 16px;
+		}
+	</style>
+</head>
+<body>
+	<script type="text/x-handlebars-template" id="table-template">
+		<table class="results-table" border="1" cellpadding="8">
+			<thead>
+				<tr>
+					<th colspan="{{colspan}}">{{position}}</th>
+				</tr>
+				<tr>
+					<th></th>
+					{{#each candidates}}
+					<th>{{name}}</th>
+					{{/each}}
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>Votes</th>
+					{{#each candidates}}
+					<td>{{votes}}</td>
+					{{/each}}
+				</tr>
+			</tbody>
+		</table>
+	</script>
+	<select id="role-selection">
+		<option selected disabled>Select a Role</option>
+	</select>
+</body>
+<script>
+	const tableTemplate = Handlebars.compile($("#table-template").html())
+	let results = []
+	axios.get('api/results')
+	.then(response => response.data)
+	.then(data => results = _.sortBy(data.positions, 'position'))
+	.then(() => {
+		const options = results.map(result => $("<option>").html(result.position))
+		$("#role-selection").append(options)
+	})
+
+	$("#role-selection").on('change', () => {
+		const role = $("#role-selection").val()
+		const position = results.filter(result => result.position == role)[0]
+		position.colspan = position.candidates.length + 1
+
+		position.candidates = _.orderBy(position.candidates, 'votes', 'desc')
+
+		const table = $(tableTemplate(position))
+		$('.results-table').remove()
+		$('body').append(table)
+	})
+
+</script>
+</html>
