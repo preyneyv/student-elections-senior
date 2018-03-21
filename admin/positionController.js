@@ -97,7 +97,6 @@ exports.results = (req, res) => {
 	let positions = []
 	Position.find()
 	.then(_positions => {
-		console.log(_positions)
 		const promises = _positions.map(_position => Candidate.find({
 			_id: { $in: _position.candidates.map(c => c.candidateId) }
 		})
