@@ -20,6 +20,10 @@ const positionSchema = new Schema({
 			votes: {
 				type: Number,
 				default: 0
+			},
+			teacherVotes: {
+				type: Number,
+				default: 0
 			}
 		}
 	]
@@ -57,8 +61,23 @@ const studentSchema = new Schema({
 	}
 })
 
+const teacherSchema = new Schema({
+	pin: String,
+	name: String,
+	house: String,
+	used: {
+		type: Boolean,
+		default: false
+	},
+	voted: {
+		type: Boolean,
+		default: false
+	}
+})
+
 module.exports = {
 	Candidate: mongoose.model('Candidate', candidateSchema),
 	Position: mongoose.model('Position', positionSchema),
-	Student: mongoose.model('Student', studentSchema)
+	Student: mongoose.model('Student', studentSchema),
+	Teacher: mongoose.model('Teacher', teacherSchema)
 }
