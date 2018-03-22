@@ -1,4 +1,4 @@
 {
-	"dbUri": "mongodb://localhost/app_student_election_senior",
-	"imagesDir": "/datastore/student_elections_senior_images"
+	"dbUri": "mongodb://localhost/app_student_election_junior",
+	"imagesDir": "/datastore/student_elections_junior_images"
 }
