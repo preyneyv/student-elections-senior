@@ -58,7 +58,7 @@ function populatePositions() {
 			)
 			positionCandidatesElem.append(candidateElem)
 		})
-		const candidateOptions = candidates
+		const candidateOptions = _.sortBy(candidates, 'name')		
 		.filter(candidate => {
 			return ((position.gradeSpecific.length==0 || position.gradeSpecific.indexOf(candidate.grade) != -1)
 			&& (!position.houseSpecific || candidate.house == position.houseSpecific)
@@ -143,7 +143,7 @@ function populatePositions() {
 
 				$(this).find("option").remove()
 				position.candidates.push(candidate)
-				const candidateOptions = candidates
+				const candidateOptions = _.sortBy(candidates, 'name')
 				.filter(candidate => {
 					return ((position.gradeSpecific.length==0 || position.gradeSpecific.indexOf(candidate.grade) != -1)
 					&& (!position.houseSpecific || candidate.house == position.houseSpecific)
@@ -151,6 +151,7 @@ function populatePositions() {
 					&& (position.candidates.map(c => c._id).indexOf(candidate._id) == -1))
 					|| candidate.name == "Abstain"
 				})
+				console.log(cand)
 				.map(candidate => {
 					return $("<option>")
 					.text(candidate.name)
@@ -178,7 +179,7 @@ let modal = new (function() {
 	}
 	this.hide = () => {
 		$("#create-position-modal").removeClass('show')
-		// updateCandidates()
+		updatePositions()
 		// $('#create-position-modal input').val('')
 	}
 	this.submit = () => {
