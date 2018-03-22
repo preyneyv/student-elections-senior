@@ -115,7 +115,7 @@ input[type=text]::placeholder {
 
 .voting-page-candidates .candidate {
 	flex: 0 0 calc(50% - 32px);
-	background: green;
+	background: white;
 	box-sizing: border-box;
 	margin: 16px;
 	position: relative;
@@ -152,6 +152,7 @@ input[type=text]::placeholder {
 
 .voting-page-candidates .candidate-image {
 	position: absolute;
+	background-repeat: no-repeat;
 	top: 0;
 	left: 0;
 	width: 100%;
