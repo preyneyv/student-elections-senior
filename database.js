@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose
 
-mongoose.connect(studentElectionsJunior.dbUri)
+mongoose.connect(studentElectionsSenior.dbUri)
 
 const positionSchema = new Schema({
 	position: String,
