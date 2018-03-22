@@ -6,5 +6,5 @@ for (var i = 0; i < 20; i++) {
 		pin: ("0000" + i).substr(-4,4),
 		name: "Management"
 	})
-	return management.save()
+	management.save()
 }
