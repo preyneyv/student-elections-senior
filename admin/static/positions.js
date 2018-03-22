@@ -60,10 +60,11 @@ function populatePositions() {
 		})
 		const candidateOptions = candidates
 		.filter(candidate => {
-			return (position.gradeSpecific.length==0 || position.gradeSpecific.indexOf(candidate.grade) != -1)
+			return ((position.gradeSpecific.length==0 || position.gradeSpecific.indexOf(candidate.grade) != -1)
 			&& (!position.houseSpecific || candidate.house == position.houseSpecific)
 			&& (!position.sectionSpecific || candidate.section == position.sectionSpecific)
-			&& (position.candidates.map(c => c._id).indexOf(candidate._id) == -1)
+			&& (position.candidates.map(c => c._id).indexOf(candidate._id) == -1))
+			|| candidate.name == "Abstain"
 		})
 		.map(candidate => {
 			return $("<option>")
@@ -144,10 +145,11 @@ function populatePositions() {
 				position.candidates.push(candidate)
 				const candidateOptions = candidates
 				.filter(candidate => {
-					return (position.gradeSpecific.length==0 || position.gradeSpecific.indexOf(candidate.grade) !== -1)
+					return ((position.gradeSpecific.length==0 || position.gradeSpecific.indexOf(candidate.grade) != -1)
 					&& (!position.houseSpecific || candidate.house == position.houseSpecific)
 					&& (!position.sectionSpecific || candidate.section == position.sectionSpecific)
-					&& (position.candidates.map(c => c._id).indexOf(candidate._id) == -1)
+					&& (position.candidates.map(c => c._id).indexOf(candidate._id) == -1))
+					|| candidate.name == "Abstain"
 				})
 				.map(candidate => {
 					return $("<option>")
