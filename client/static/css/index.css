@@ -3,8 +3,6 @@ body {
 	font-size: 24px;
 	padding: 0;
 	margin: 0;
-	padding-top: 100vh;
-	overflow-y: hidden;
 	color: white;
 	background: #348F50;
 	background: -webkit-linear-gradient(45deg, #56B4D3, #348F50);
@@ -12,7 +10,14 @@ body {
 	background-attachment: fixed;
 	background-size: 100vw 10vh;
 }
-
+#container {
+	width: 100vw;
+	height: 100vh;
+	position: relative;
+	box-sizing: border-box;
+	overflow: hidden;
+	padding-top: 100vh;
+}
 #full-center {
 	position: absolute;
 	top: 50%;
@@ -136,7 +141,7 @@ input[type=text]::placeholder {
 	width: calc(100% - 16px);
 	padding: 16px;
 	z-index: 2;
-	background: #fffc;
+	background: rgba(255,255,255,0.8);
 	color: black;
 	font-weight: 900;
 	text-transform: uppercase;
@@ -156,7 +161,7 @@ input[type=text]::placeholder {
 }
 
 .confirm-votes {
-	color: #000a;
+	color: rgba(0,0,0,0.8);
 }
 .voting-page-votes {
 	align-items: flex-start;
@@ -187,4 +192,5 @@ input[type=text]::placeholder {
 	letter-spacing: 3px;
 	text-align: center;
 	text-transform: uppercase;
+	color: black;
 }

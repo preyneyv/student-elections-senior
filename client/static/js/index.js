@@ -17,7 +17,8 @@ $("#pin-input").on('keypress', function (e) {
 	}
 	if ($("#pin-input").val().length === 3) {
 		setTimeout(function () {
-			submitPin(parseInt($("#pin-input").val()));
+			var pin = ("0000" + parseInt($("#pin-input").val())).substr(-4,4); 
+			submitPin(pin);
 			$("#pin-input").prop('disabled', true).blur();
 		}, 300);
 	}
@@ -65,12 +66,13 @@ function createViews(_positions) {
 		page.find('.candidate').on('click', clickCandidate);
 		return page;
 	});
-	$("body").append(pages);
+	$("#container").append(pages);
 
 	currentPage = 0;
 	$(window).on('resize', function () {
-		var scrollTop = $("[data-page-index=" + currentPage + "]").offset().top;
-		$('body, html').stop().scrollTop(scrollTop);
+		//var scrollTop = $(".voting-page").eq(currentPage).position().top;
+		//$('#container').stop().scrollTop(scrollTop);
+		scrollWindowToCurrent()
 	});
 	setTimeout(function () {
 		return scrollWindowToCurrent();
@@ -79,9 +81,13 @@ function createViews(_positions) {
 
 function scrollWindowToCurrent() {
 	var cb = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {};
-
-	var scrollTop = $("[data-page-index=" + currentPage + "]").offset().top;
-	$('body, html').stop().animate({ scrollTop: scrollTop }, 500, cb);
+	//var scrollTop = $(window).height() * (currentPage + 1)
+	
+	var scrollTop = $(".voting-page").eq(currentPage).position().top;
+	console.log(scrollTop, currentPage)
+	//$('#container').stop().animate({ scrollTop: "+=" + scrollTop }, 500, cb);
+	$("#container").scrollTop($("#container").scrollTop() + scrollTop)
+	cb()
 }
 
 function clickCandidate() {
@@ -95,6 +101,7 @@ function clickCandidate() {
 	} else {
 		currentPage++;
 	}
+	console.log(currentPage)
 	if (currentPage === positions.length) {
 		// VOTING DONE
 		showConfirmPage();
@@ -121,7 +128,7 @@ function showConfirmPage() {
 	var page = $(confirmTemplate({ votes: confirmVotes, currentPage: currentPage }));
 	page.find('.vote').on('click', rewindToVote);
 	page.find('.voting-page-submit').on('click', submitVotes);
-	$('body').append(page);
+	$('#container').append(page);
 }
 
 function rewindToVote() {
@@ -143,6 +150,6 @@ function submitVotes() {
 }
 
 // disable confirm for testing
-confirm = function confirm() {
-	return true;
-};
+//confirm = function confirm() {
+//	return true;
+//};
