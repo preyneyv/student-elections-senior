@@ -151,7 +151,6 @@ function populatePositions() {
 					&& (position.candidates.map(c => c._id).indexOf(candidate._id) == -1))
 					|| candidate.name == "Abstain"
 				})
-				console.log(cand)
 				.map(candidate => {
 					return $("<option>")
 					.text(candidate.name)
