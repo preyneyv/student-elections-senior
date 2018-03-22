@@ -115,8 +115,9 @@ function populatePositions() {
 	})
 	$(".candidate-list").on('change', function() {
 		const candidateId = $(this).val()
+		const candidate = candidates.filter(c => c._id === candidateId) [0]
 		$(this).val("Select a candidate")
-		if (!confirm("Add this candidate?")) return;
+		if (!confirm(`Add ${candidate.name}?`)) return;
 		const positionId = $(this).parents('.position').data('id')
 		
 		axios.put(`api/positions/${positionId}/${candidateId}`)
